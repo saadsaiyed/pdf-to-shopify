@@ -3,7 +3,7 @@
 client_id = "212aa74404a38b09859adaecb62e3d72"
 name = "pdf-to-order"
 handle = "pdf-to-order-1"
-application_url = "https://oe-standing-edge-menus.trycloudflare.com"
+application_url = "https://includes-producing-endorsed-seem.trycloudflare.com"
 embedded = true
 
 [build]
@@ -20,9 +20,9 @@ scopes = "read_products,write_draft_orders"
 
 [auth]
 redirect_urls = [
-  "https://oe-standing-edge-menus.trycloudflare.com/auth/callback",
-  "https://oe-standing-edge-menus.trycloudflare.com/auth/shopify/callback",
-  "https://oe-standing-edge-menus.trycloudflare.com/api/auth/callback"
+  "https://includes-producing-endorsed-seem.trycloudflare.com/auth/callback",
+  "https://includes-producing-endorsed-seem.trycloudflare.com/auth/shopify/callback",
+  "https://includes-producing-endorsed-seem.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

@@ -16,7 +16,8 @@ import {
   PageActions,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
-import { updateProducts } from "../models/product.server";
+import { updateProducts, getProduct } from "../models/product.server";
+import { createDraftOrder } from "../models/order.server";
 
 
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
@@ -30,12 +31,10 @@ export async function action({ request }) {
   console.log("Action function triggered");
   const { admin } = await authenticate.admin(request);
 
-  updateProducts(admin.graphql)
-  return json({ });
   try {
     const formData = await request.formData();
     console.log("Form data received:", formData);
-
+    
     const customerName = formData.get("customerName");
     const poNumber = formData.get("poNumber");
     const pdfFile = formData.get("pdfFile");
@@ -44,7 +43,9 @@ export async function action({ request }) {
       console.error("Validation error: Missing fields", { customerName, poNumber, pdfFile });
       return json({ errors: { form: "All fields are required" } }, { status: 422 });
     }
-
+    if (customerName == "X"){
+      updateProducts(admin.graphql)
+    }
     const pdfBuffer = await pdfFile.arrayBuffer();
     const pdfjsDoc = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
 
@@ -55,13 +56,11 @@ export async function action({ request }) {
       const pageText = textContent.items.map(item => item.str).join(" ");
       text += pageText + "\n";
     }
-    console.log("Text extracted from PDF:", text);
-
     const lines = text.split('  ');
     console.log("Text split into lines:", lines);
 
     let line_items = []
-    let quantity = []
+    let quantities = []
     let incorrect_item_code = []
     let check_item_code = false
     
@@ -72,20 +71,17 @@ export async function action({ request }) {
         console.log(line.trim());
       } else if (line.length <= 3 && !line.includes(".") && /\b\d{1,3}\b/.test(line)) {
         if (check_item_code) {
-          quantity.push(line.trim());
+          quantities.push(line.trim());
         } else {
           console.log(`Item Code not found for line after ${line_items[line_items.length - 1]}: `).trim();
-          line_items.push(temp);
-          quantity.push(line.trim());
+          line_items.push(null);
+          quantities.push(line.trim());
         }
         console.log(line.trim());
         check_item_code = false;
       }
     }
-    for (let item of line_items) {
-      console.log(`Line Item Code: ${item}`);
-    }
-    
+        
     let products = [];
     let errors = [];
     for (let line of line_items) {
@@ -104,44 +100,22 @@ export async function action({ request }) {
     }
 
     async function searchProduct(query) {
-      const { admin } = await authenticate.admin(request);
-      getProduct(query, admin.graphql)
-
-      // const response = await admin.graphql(
-      //   `#graphql
-      //     query {
-      //       productVariant(sku: query) {
-      //       edges {
-      //         node {
-      //           id
-      //           title
-      //           price
-      //           sku
-      //           inventoryQuantity  
-      //           inventoryPolicy
-      //           inventoryManagement
-      //           weight
-      //           weightUnit
-      //           availableForSale
-      //           barcode
-      //         }
-      //       }
-      //     }
-      //   }`,
-      // );
-      
-      // const data = await response.json();
-      
-      // const edges = data.data.productVariants.edges;
-      // for (let i = 0; i < edges.length; i++) {
-      //   const element = edges[i];
-      //   console.log(element.node);        
-      // }
-      return products.length > 0 ? products[0] : null;
+      return await getProduct(query, admin.graphql);
     }
 
     console.log("Products found:", products);
     console.log("Errors encountered:", errors);
+
+    // Creating Order
+    let lineItems = []; 
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const quantity = quantities[i];
+      lineItems.push({variantId: product.id, quantity})
+    }
+    const customer = {id: "gid:\/\/shopify\/Customer\/7329069039831"};
+    console.log("Line Items: ", lineItems);
+    const draftOrderResponse = await createDraftOrder(admin.graphql, customer, lineItems);
 
     return json({ products, errors });
 
