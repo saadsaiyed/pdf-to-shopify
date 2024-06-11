@@ -3,7 +3,7 @@
 client_id = "212aa74404a38b09859adaecb62e3d72"
 name = "pdf-to-order"
 handle = "pdf-to-order-1"
-application_url = "https://includes-producing-endorsed-seem.trycloudflare.com"
+application_url = "https://shanghai-consultant-nest-bedford.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,13 +16,13 @@ direct_api_mode = "online"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,write_draft_orders"
+scopes = "read_customers,read_draft_orders,read_products,write_draft_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://includes-producing-endorsed-seem.trycloudflare.com/auth/callback",
-  "https://includes-producing-endorsed-seem.trycloudflare.com/auth/shopify/callback",
-  "https://includes-producing-endorsed-seem.trycloudflare.com/api/auth/callback"
+  "https://shanghai-consultant-nest-bedford.trycloudflare.com/auth/callback",
+  "https://shanghai-consultant-nest-bedford.trycloudflare.com/auth/shopify/callback",
+  "https://shanghai-consultant-nest-bedford.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

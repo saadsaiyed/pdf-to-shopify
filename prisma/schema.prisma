@@ -37,4 +37,5 @@ model Product {
   title             String  
   sku               String
   createdAt         DateTime  @default(now())
+  shopName          String    @default("")
 }

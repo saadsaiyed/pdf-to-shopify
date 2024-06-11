@@ -30,6 +30,18 @@ export async function loader({ request, params }) {
 export async function action({ request }) {
   console.log("Action function triggered");
   const { admin } = await authenticate.admin(request);
+  const shopResponse = await admin.graphql(
+    `#graphql
+      query {
+        shop {
+          name
+        }
+      }
+    `
+  );
+  const shopData = await shopResponse.json();
+  const shopName = shopData.data.shop.name;
+  console.log(shopName);
 
   try {
     const formData = await request.formData();
@@ -38,7 +50,7 @@ export async function action({ request }) {
     const customerName = formData.get("customerName");
     const poNumber = formData.get("poNumber");
     const pdfFile = formData.get("pdfFile");
-
+    
     if (!customerName || !poNumber || !pdfFile) {
       console.error("Validation error: Missing fields", { customerName, poNumber, pdfFile });
       return json({ errors: { form: "All fields are required" } }, { status: 422 });
@@ -100,7 +112,7 @@ export async function action({ request }) {
     }
 
     async function searchProduct(query) {
-      return await getProduct(query, admin.graphql);
+      return await getProduct(query, shopName, admin.graphql);
     }
 
     console.log("Products found:", products);
@@ -110,10 +122,10 @@ export async function action({ request }) {
     let lineItems = []; 
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
-      const quantity = quantities[i];
+      const quantity = parseInt(quantities[i]);
       lineItems.push({variantId: product.id, quantity})
     }
-    const customer = {id: "gid:\/\/shopify\/Customer\/7329069039831"};
+    const customer = {id: "gid:\/\/shopify\/Customer\/7421736485107"};
     console.log("Line Items: ", lineItems);
     const draftOrderResponse = await createDraftOrder(admin.graphql, customer, lineItems);
 
