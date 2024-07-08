@@ -77,19 +77,20 @@ export async function action({ request }) {
     let check_item_code = false
     
     for (let line of lines) {
+      line = line.trim();
       if (/^[A-Z]\.[A-Z]-[0-9A-Z]+$/.test(line)) {
-        line_items.push(line.trim());
+        line_items.push(line);
         check_item_code = true;
-        console.log(line.trim());
-      } else if (line.length <= 3 && !line.includes(".") && /\b\d{1,3}\b/.test(line)) {
+        console.log(line);
+      } else if (line.length <= 4 && !line.includes(".") && /\b\d{1,4}\b/.test(line)) {
         if (check_item_code) {
-          quantities.push(line.trim());
+          quantities.push(line);
         } else {
-          console.log(`Item Code not found for line after ${line_items[line_items.length - 1]}: `).trim();
+          console.log(`Item Code not found for line after ${line_items[line_items.length - 1]}: `);
           line_items.push(null);
-          quantities.push(line.trim());
+          quantities.push(line);
         }
-        console.log(line.trim());
+        console.log(line);
         check_item_code = false;
       }
     }
@@ -150,6 +151,8 @@ export default function OrderForm() {
     pdfFile: null,
   });
 
+  const [feedback, setFeedback] = useState(null);  // State variable for feedback
+
   const nav = useNavigation();
   const isSaving = nav.state === "submitting";
 
@@ -165,6 +168,7 @@ export default function OrderForm() {
 
     setCleanFormState({ ...formState });
     submit(data, { method: "post", encType: "multipart/form-data" });
+    setFeedback({ type: "success", message: "Draft order created successfully." });
   }
 
   return (
@@ -209,6 +213,18 @@ export default function OrderForm() {
                 ) : null}
               </BlockStack>
             </Card>
+            {feedback && (
+              <Card>
+                <BlockStack gap="500">
+                  <Text as={"h2"} variant="headingLg">
+                    {feedback.type === "success" ? "Success" : "Error"}
+                  </Text>
+                  <Text>
+                    {feedback.message}
+                  </Text>
+                </BlockStack>
+              </Card>
+            )}
           </BlockStack>
         </Layout.Section>
         <Layout.Section>
@@ -224,3 +240,4 @@ export default function OrderForm() {
     </Page>
   );
 }
+
