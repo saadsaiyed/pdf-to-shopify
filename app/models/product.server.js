@@ -122,7 +122,7 @@ export async function updateProducts(graphql) {
   );
   const shopData = await shopResponse.json();
   const shopName = shopData.data.shop.name;
-  
+
   const productMutation = `
     mutation {
       bulkOperationRunQuery(
@@ -178,25 +178,24 @@ export async function updateProducts(graphql) {
 
   // Poll the status of the bulk operation until it is complete
   const downloadUrl = await pollBulkOperationStatus(graphql, bulkOperationId);
-  // const downloadUrl = `https://storage.googleapis.com/shopify-tiers-assets-prod-us-east1/bulk-operation-outputs/qdsjr2gntjpk9h8spkz6qe2g9vxw-final?GoogleAccessId=assets-us-prod%40shopify-tiers.iam.gserviceaccount.com&Expires=1718222278&Signature=oWO8VFiN4SznydfGVyvtuyhbShjUAk9veOQ3kwCGgBJEzRwK4kvkDkt6rFZQd2AFs9Vw%2F%2FF3zzxDbDO9vd%2BatMydGR0%2F8n91XaizuUpNa0N5CYuajDKk2MtDmRS%2B0Eukmy%2B4C1raQRIJ5KOE7iw89MS%2Fg8qrBw8RYEcQmzPcYdufSUGDIdMq9f%2BGMq9h6T68hcOsXuhQQDQu6OVGpVkRw7MPimoSRHOJ13WTRPNP0kBv%2FSaYTtdEc7ObQ%2BYVd5PaA0EBzO6NEWt2uJFWj9psUZ6PQUz%2FzFOCjlrJd1puKSO6SK2%2B939ghrqc5jsJv0dt7qwykZOKf%2Fiw9uQqeORqyg%3D%3D&response-content-disposition=attachment%3B+filename%3D%22bulk-4267246584023.jsonl%22%3B+filename%2A%3DUTF-8%27%27bulk-4267246584023.jsonl&response-content-type=application%2Fjsonl`;
 
   // Download the results
   if (downloadUrl) {
-      const response = await fetch(downloadUrl);
-      const text = await response.text();
-      const lines = text.split('\n');
-      for (const line of lines) {
-        if (line.trim()) {
-          const productData = JSON.parse(line);
-          if (productData.price) {   
-            // Insert data into Prisma Product table
-            await insertDataWithShopName(shopName, productData);
-          }
+    const response = await fetch(downloadUrl);
+    const text = await response.text();
+    const lines = text.split('\n');
+    for (const line of lines) {
+      if (line.trim()) {
+        const productData = JSON.parse(line);
+        if (productData.price) {
+          // Insert data into Prisma Product table
+          await insertDataWithShopName(shopName, productData);
         }
       }
-      console.log('Data inserted into Prisma successfully.');
-      // import { promises as fs } from 'fs';
-      // await fs.writeFile('bulk_data.jsonl', text);
-      // console.log('Data downloaded successfully.');
+    }
+    console.log('Data inserted into Prisma successfully.');
+    // import { promises as fs } from 'fs';
+    // await fs.writeFile('bulk_data.jsonl', text);
+    // console.log('Data downloaded successfully.');
   }
 }
