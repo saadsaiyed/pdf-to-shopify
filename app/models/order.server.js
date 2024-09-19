@@ -1,6 +1,6 @@
 import { authenticate } from "../shopify.server";
 
-export async function createDraftOrder(graphql, customer, lineItems) {
+export async function createDraftOrder(graphql, customer, lineItems, poNumber) {
   const response = await graphql(
     `#graphql
     mutation draftOrderCreate($input: DraftOrderInput!) {
@@ -19,7 +19,12 @@ export async function createDraftOrder(graphql, customer, lineItems) {
         "input": {
           customerId: customer.id,
           lineItems: lineItems,
-        }
+          "note": "PO: " + poNumber,
+          "shippingLine": {
+            "title": "Free Shipping",
+            "price": 0.00
+          },
+        },
       },
     },
   );
@@ -33,7 +38,7 @@ export async function createDraftOrder(graphql, customer, lineItems) {
   return data
 
 }
-export async function createDraftOrder_original(graphql, customer, lineItems) {
+export async function createDraftOrder_original(graphql, customer, lineItems, poNumber) {
   const draftOrderMutation = `#graphql
   mutation draftOrderCreate($input: DraftOrderInput!) {
     draftOrderCreate(input: $input) {

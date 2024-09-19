@@ -3,7 +3,7 @@
 client_id = "212aa74404a38b09859adaecb62e3d72"
 name = "pdf-to-order"
 handle = "pdf-to-order-1"
-application_url = "https://sheep-securities-study-dsc.trycloudflare.com"
+application_url = "https://mitchell-graduated-styles-final.trycloudflare.com"
 embedded = true
 
 [build]
@@ -20,9 +20,9 @@ scopes = "read_customers,read_draft_orders,read_products,write_draft_orders,writ
 
 [auth]
 redirect_urls = [
-  "https://sheep-securities-study-dsc.trycloudflare.com/auth/callback",
-  "https://sheep-securities-study-dsc.trycloudflare.com/auth/shopify/callback",
-  "https://sheep-securities-study-dsc.trycloudflare.com/api/auth/callback"
+  "https://mitchell-graduated-styles-final.trycloudflare.com/auth/callback",
+  "https://mitchell-graduated-styles-final.trycloudflare.com/auth/shopify/callback",
+  "https://mitchell-graduated-styles-final.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

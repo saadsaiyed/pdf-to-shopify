@@ -19,7 +19,6 @@ import { authenticate } from "../shopify.server";
 import { updateProducts, getProduct } from "../models/product.server";
 import { createDraftOrder } from "../models/order.server";
 
-
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 
 export async function loader({ request, params }) {
@@ -48,11 +47,11 @@ export async function action({ request }) {
     console.log("Form data received:", formData);
     
     const customerName = formData.get("customerName");
-    const poNumber = formData.get("poNumber");
+    let poNumber = formData.get("poNumber");
     const pdfFile = formData.get("pdfFile");
     
-    if (!customerName || !poNumber || !pdfFile) {
-      console.error("Validation error: Missing fields", { customerName, poNumber, pdfFile });
+    if (!pdfFile) {
+      console.error("Validation error: Missing fields", { pdfFile });
       return json({ errors: { form: "All fields are required" } }, { status: 422 });
     }
     if (customerName == "X"){
@@ -60,6 +59,12 @@ export async function action({ request }) {
     }
     const pdfBuffer = await pdfFile.arrayBuffer();
     const pdfjsDoc = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+    console.log("pdfFile ", pdfFile.name);
+
+    var split_po = pdfFile.name.split('.')[0].split(' ')
+    console.log("split_po", split_po);
+    if(split_po.length == 3)
+      poNumber = split_po[2]
 
     let text = "";
     for (let i = 0; i < pdfjsDoc.numPages; i++) {
@@ -128,7 +133,7 @@ export async function action({ request }) {
     }
     const customer = {id: "gid:\/\/shopify\/Customer\/7421736485107"};
     console.log("Line Items: ", lineItems);
-    const draftOrderResponse = await createDraftOrder(admin.graphql, customer, lineItems);
+    const draftOrderResponse = await createDraftOrder(admin.graphql, customer, lineItems, poNumber);
 
     return json({ products, errors });
 
