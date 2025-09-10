@@ -101,35 +101,38 @@ export async function action({ request }) {
     }
         
     let products = [];
+    let valid_quantities = []; // Create a new array for valid quantities
     let errors = [];
-    for (let line of line_items) {
+    
+    for (let i = 0; i < line_items.length; i++) {
+      let line = line_items[i].trim();
+      
       try {
-        console.log("Searching for product with query:", line.trim());
-        let product = await searchProduct(line.trim());
+        console.log("Searching for product with query:", line);
+        let product = await searchProduct(line);
         if (product) {
           products.push(product);
+          valid_quantities.push(quantities[i]); // Only push valid quantities
         } else {
-          errors.push(line.trim());
+          errors.push(line);
         }
       } catch (error) {
-        console.error("Error searching product for line:", line.trim(), error);
-        errors.push(line.trim());
+        console.error("Error searching product for line:", line, error);
+        errors.push(line);
       }
     }
-
+    
     async function searchProduct(query) {
       return await getProduct(query, shopName, admin.graphql);
     }
-
-    console.log("Products found:", products);
     console.log("Errors encountered:", errors);
 
     // Creating Order
     let lineItems = []; 
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
-      const quantity = parseInt(quantities[i]);
-      lineItems.push({variantId: product.id, quantity})
+      const quantity = parseInt(valid_quantities[i]); // Use valid quantities only
+      lineItems.push({variantId: product.id, quantity});
     }
     const customer = {id: "gid:\/\/shopify\/Customer\/7421736485107"};
     console.log("Line Items: ", lineItems);

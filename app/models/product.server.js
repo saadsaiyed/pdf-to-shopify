@@ -15,7 +15,7 @@ export async function getProduct(sku, shopName, graphql) {
   if (!product) {
     return null;
   }
-  console.log("product from prisma", product);
+  console.log("product Found with sku", product.sku);
 
   const statusQuery = `
     #graphql
@@ -38,7 +38,7 @@ export async function getProduct(sku, shopName, graphql) {
   const response = await graphql(statusQuery);
 
   const data = await response.json()
-  console.log("data", data.data.productVariant.sku);
+  console.log("data SKU from graphql", data.data.productVariant.sku);
   return data.data.productVariant;
 }
 

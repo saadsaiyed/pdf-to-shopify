@@ -1,6 +1,10 @@
 import { authenticate } from "../shopify.server";
 
 export async function createDraftOrder(graphql, customer, lineItems, poNumber) {
+  const today = new Date();
+  const issuedAt = today.toISOString(); // Convert to ISO string format
+  const dueAt = new Date(today.setDate(today.getDate() + 30)).toISOString(); // 30 days from today
+
   const response = await graphql(
     `#graphql
     mutation draftOrderCreate($input: DraftOrderInput!) {
@@ -17,59 +21,49 @@ export async function createDraftOrder(graphql, customer, lineItems, poNumber) {
     {
       variables: {
         "input": {
-          customerId: customer.id,
+          purchasingEntity: { customerId: customer.id },
           lineItems: lineItems,
-          "note": "PO: " + poNumber,
-          "shippingLine": {
-            "title": "Free Shipping",
-            "price": 0.00
+          note: "PO: " + poNumber,
+          shippingLine: {
+            title: "Free Shipping",
+            price: 0.00
           },
+          // paymentTerms: {
+          //   paymentSchedules: [{ issuedAt: issuedAt }],
+          //   paymentTermsTemplateId: "gid://shopify/PaymentTermsTemplate/4"
+          // }
         },
       },
-    },
+    }
   );
 
-  console.log("customerId", customer.id);
-  console.log("lineItems", lineItems);
+  // Log request and response information
+  console.log("Request sent to Shopify GraphQL:");
+  console.log("Variables:", {
+    purchasingEntity: { customerId: customer.id },
+    lineItems: lineItems,
+    note: "PO: " + poNumber,
+    shippingLine: {
+      title: "Free Shipping",
+      price: 0.00
+    },
+    paymentTerms: {
+      paymentSchedules: [{ issuedAt: issuedAt }],
+      paymentTermsTemplateId: "gid://shopify/PaymentTermsTemplate/4"
+    }
+  });
+
+  // Access and log the response headers, including x-request-id
+  const xRequestId = response.headers.get('x-request-id');
+  console.log('x-request-id:', xRequestId);  // Log the x-request-id header
 
   const data = await response.json();
-  console.log("data", data);
-  console.log('Full Response:', JSON.stringify(data, null, 2));
-  return data
+  console.log("Data returned from Shopify API:", JSON.stringify(data, null, 2));
 
-}
-export async function createDraftOrder_original(graphql, customer, lineItems, poNumber) {
-  const draftOrderMutation = `#graphql
-  mutation draftOrderCreate($input: DraftOrderInput!) {
-    draftOrderCreate(input: $input) {
-      draftOrder {
-        id
-      }
-    }
-  }`;
+  // Optionally, you can include more information if needed
+  if (xRequestId) {
+    console.log('Captured x-request-id:', xRequestId); // This is the unique request ID for tracking
+  }
 
-  const variables = {
-    input: {
-      customerId: customer.id,
-      lineItems: lineItems,
-    },
-  };
-  
-  console.log("variables", variables);
-  console.log("line items", variables.input.lineItems);
-  const response = await graphql(draftOrderMutation, variables);
-  const data = response.json();
-  
-  // const { admin, session } = await authenticate.admin(request);
-
-  // const order = new admin.rest.resources.Order({session: session});
-  // order.id = data.draftOrderCreate.draftOrder.id;
-  // order.note = "Customer contacted us about a custom engraving on this iPod";
-  
-  // await order.save({
-  //   update: true,
-  // });
-
-  // return response.json();
   return data;
 }

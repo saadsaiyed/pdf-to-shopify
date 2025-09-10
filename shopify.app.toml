@@ -3,7 +3,7 @@
 client_id = "212aa74404a38b09859adaecb62e3d72"
 name = "pdf-to-order"
 handle = "pdf-to-order-1"
-application_url = "https://mitchell-graduated-styles-final.trycloudflare.com"
+application_url = "https://dom-like-nitrogen-programmes.trycloudflare.com"
 embedded = true
 
 [build]
@@ -12,17 +12,18 @@ dev_store_url = "quickstart-8abe794c.myshopify.com"
 include_config_on_deploy = true
 
 [access.admin]
-direct_api_mode = "online"
+direct_api_mode = "offline"
+embedded_app_direct_api_access = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_customers,read_draft_orders,read_products,write_draft_orders,write_products"
+scopes = "read_customers,read_draft_orders,read_products,write_draft_orders,write_orders,write_payment_mandate,write_products"
 
 [auth]
 redirect_urls = [
-  "https://mitchell-graduated-styles-final.trycloudflare.com/auth/callback",
-  "https://mitchell-graduated-styles-final.trycloudflare.com/auth/shopify/callback",
-  "https://mitchell-graduated-styles-final.trycloudflare.com/api/auth/callback"
+  "https://dom-like-nitrogen-programmes.trycloudflare.com/auth/callback",
+  "https://dom-like-nitrogen-programmes.trycloudflare.com/auth/shopify/callback",
+  "https://dom-like-nitrogen-programmes.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

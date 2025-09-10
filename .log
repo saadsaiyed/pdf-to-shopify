@@ -1,0 +1,128 @@
+09:00:27 │ remix      │ Request sent to Shopify GraphQL:
+09:00:27 │ remix      │ Variables: {
+09:00:27 │ remix      │   customerId: 'gid://shopify/Customer/7421736485107',
+09:00:27 │ remix      │   lineItems: [
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117555007559',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117555073095',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117855522887',
+09:00:27 │ remix      │       quantity: 1
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117855064135',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117979320391',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31118046101575',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117618511943',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31118042398791',
+09:00:27 │ remix      │       quantity: 6
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117790969927',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117784612935',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117596622919',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31118009008199',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117760233543',
+09:00:27 │ remix      │       quantity: 1
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117751746631',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117719994439',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117577551943',
+09:00:27 │ remix      │       quantity: 6
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117577486407',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117703872583',
+09:00:27 │ remix      │       quantity: 4
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117988429895',
+09:00:27 │ remix      │       quantity: 6
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117988266055',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117570179143',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117564313671',
+09:00:27 │ remix      │       quantity: 3
+09:00:27 │ remix      │     },
+09:00:27 │ remix      │     {
+09:00:27 │ remix      │       variantId: 'gid://shopify/ProductVariant/31117687554119',
+09:00:27 │ remix      │       quantity: 2
+09:00:27 │ remix      │     }
+09:00:27 │ remix      │   ],
+09:00:27 │ remix      │   poNumber: 'PO1423663',
+09:00:27 │ remix      │   note: 'PO: PO1423663',
+09:00:27 │ remix      │   shippingLine: { title: 'Free Shipping', price: 0 },
+09:00:27 │ remix      │   paymentTerms: { paymentSchedules: [ [Object] ] }
+09:00:27 │ remix      │ }
+09:00:27 │ remix      │ x-request-id: null
+09:00:27 │ remix      │ Data returned from Shopify API: {
+09:00:27 │ remix      │   "data": {
+09:00:27 │ remix      │     "draftOrderCreate": {
+09:00:27 │ remix      │       "draftOrder": null,
+09:00:27 │ remix      │       "userErrors": [
+09:00:27 │ remix      │         {
+09:00:27 │ remix      │           "field": null,
+09:00:27 │ remix      │           "message": "The user must have access to set payment terms."
+09:00:27 │ remix      │         }
+09:00:27 │ remix      │       ]
+09:00:27 │ remix      │     }
+09:00:27 │ remix      │   },
+09:00:27 │ remix      │   "extensions": {
+09:00:27 │ remix      │     "cost": {
+09:00:27 │ remix      │       "requestedQueryCost": 10,
+09:00:27 │ remix      │       "actualQueryCost": 10,
+09:00:27 │ remix      │       "throttleStatus": {
+09:00:27 │ remix      │         "maximumAvailable": 2000,
+09:00:27 │ remix      │         "currentlyAvailable": 1990,
+09:00:27 │ remix      │         "restoreRate": 100
+09:00:27 │ remix      │       }
+09:00:27 │ remix      │     }
+09:00:27 │ remix      │   }
+09:00:27 │ remix      │ }
+09:00:27 │ remix      │ [shopify-app/INFO] Authenticating admin request
