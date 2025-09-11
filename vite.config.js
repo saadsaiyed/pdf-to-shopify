@@ -22,14 +22,14 @@ if (host === "localhost") {
   hmrConfig = {
     protocol: "ws",
     host: "localhost",
-    port: 64999,
-    clientPort: 64999,
+    port: 3000,
+    clientPort: 3000,
   };
 } else {
   hmrConfig = {
     protocol: "wss",
     host: host,
-    port: parseInt(process.env.FRONTEND_PORT) || 8002,
+    port: parseInt(process.env.FRONTEND_PORT) || 3000,
     clientPort: 443,
   };
 }
@@ -37,11 +37,19 @@ if (host === "localhost") {
 export default defineConfig({
   server: {
     port: Number(process.env.PORT || 3000),
+    strictPort: true,
     hmr: hmrConfig,
     fs: {
       // See https://vitejs.dev/config/server-options.html#server-fs-allow for more information
       allow: ["app", "node_modules"],
     },
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   },
   plugins: [
     remix({
