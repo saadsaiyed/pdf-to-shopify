@@ -1,0 +1,39 @@
+# fly.toml app configuration file generated for pdf-to-shopify on 2025-09-20T04:00:21-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'pdf-to-shopify'
+primary_region = 'bom'
+
+[build]
+
+[env]
+  PORT = '3000'
+  SCOPES = 'read_customers,read_draft_orders,read_products,write_draft_orders,write_orders,write_payment_mandate,write_products'
+  SHOPIFY_API_KEY = '212aa74404a38b09859adaecb62e3d72'
+  SHOPIFY_APP_URL = 'https://pdf-to-shopify.fly.dev'
+  SHOPIFY_API_SECRET = '9e6899aedc3d43ab19adbbb0c634fe3c'
+
+[processes]
+  app = 'node ./dbsetup.js npm run start'
+
+[[mounts]]
+  source = 'data'
+  destination = '/data'
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = '1GB'
+  auto_extend_size_limit = '10GB'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

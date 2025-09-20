@@ -1,0 +1,65 @@
+{
+  "frameworks_and_runtime": {
+    "framework": "Remix",
+    "runtime": "Node.js",
+    "entry_point": "./build/server/index.js"
+  },
+  "shopify_integration": {
+    "oauth_handler": "@shopify/shopify-app-remix",
+    "scopes": [
+      "read_customers",
+      "read_draft_orders",
+      "read_products",
+      "write_draft_orders",
+      "write_orders",
+      "write_payment_mandate",
+      "write_products"
+    ],
+    "apis_called": [
+      "GraphQL"
+    ],
+    "billing_api_integration": false
+  },
+  "database": {
+    "database": "SQLite",
+    "orm": "Prisma"
+  },
+  "frontend": {
+    "has_frontend": true,
+    "framework": "React with Polaris & App Bridge",
+    "serving_method": "Embedded inside backend"
+  },
+  "webhooks": {
+    "registered_webhooks": [
+      "APP_UNINSTALLED",
+      "CUSTOMERS_DATA_REQUEST",
+      "CUSTOMERS_REDACT",
+      "SHOP_REDACT"
+    ],
+    "handler_file": "app/routes/webhooks.jsx"
+  },
+  "environment_variables": [
+    "SHOPIFY_API_KEY",
+    "SHOPIFY_API_SECRET",
+    "SCOPES",
+    "SHOPIFY_APP_URL",
+    "SHOP_CUSTOM_DOMAIN",
+    "DATABASE_URL",
+    "HOST",
+    "PORT",
+    "HMR_SERVER_PORT",
+    "FRONTEND_PORT",
+    "WEB_COOKIE_S"
+  ],
+  "dependencies": {
+    "critical_services": [
+      "pdf-lib",
+      "pdf-parse",
+      "pdfjs-dist",
+      "qrcode"
+    ],
+    "special_handling": {
+      "prisma_openssl_alpine": "When using Alpine Linux, Prisma requires `engineType = \"binary\"` and `previewFeatures = [\"linux-musl\"]` in the `generator` block of `schema.prisma`, and `openssl` may need to be installed in the Dockerfile."
+    }
+  }
+}

@@ -14,7 +14,7 @@ function getConfig() {
   };
   let extensions = [];
   try {
-    extensions = fs.readdirSync("./extensions");
+        extensions = fs.readdirSync("./extensions").filter((file) => file !== ".gitkeep");
   } catch {
     // ignore if no extensions
   }

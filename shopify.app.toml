@@ -2,14 +2,13 @@
 
 client_id = "212aa74404a38b09859adaecb62e3d72"
 name = "pdf-to-order"
-application_url = "https://poverty-pig-equations-songs.trycloudflare.com"
+application_url = "https://pdf-to-shopify.fly.dev"
 embedded = true
 handle = "pdf-to-order-1"
 
 [build]
 automatically_update_urls_on_dev = true
 dev_store_url = "quickstart-8abe794c.myshopify.com"
-include_config_on_deploy = true
 
 [webhooks]
 api_version = "2024-04"
@@ -23,7 +22,11 @@ embedded_app_direct_api_access = true
 scopes = "read_customers,read_draft_orders,read_products,write_draft_orders,write_orders,write_payment_mandate,write_products"
 
 [auth]
-redirect_urls = ["https://poverty-pig-equations-songs.trycloudflare.com/auth/callback", "https://poverty-pig-equations-songs.trycloudflare.com/auth/shopify/callback", "https://poverty-pig-equations-songs.trycloudflare.com/api/auth/callback"]
+redirect_urls = [
+  "https://pdf-to-shopify.fly.dev/auth/callback",
+  "https://pdf-to-shopify.fly.dev/auth/shopify/callback",
+  "https://pdf-to-shopify.fly.dev/api/auth/callback"
+]
 
 [pos]
 embedded = false
